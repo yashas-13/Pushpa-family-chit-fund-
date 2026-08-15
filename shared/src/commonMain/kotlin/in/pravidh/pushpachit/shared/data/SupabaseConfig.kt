@@ -1,4 +1,4 @@
-package in.pravidh.pushpachit.shared.data
+package com.pravidh.pushpachit.shared.data
 
 data class SupabaseConfig(
     val url: String,
