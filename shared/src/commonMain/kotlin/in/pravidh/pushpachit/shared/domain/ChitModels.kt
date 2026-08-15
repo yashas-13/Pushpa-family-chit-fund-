@@ -1,4 +1,4 @@
-package in.pravidh.pushpachit.shared.domain
+package com.pravidh.pushpachit.shared.domain
 
 import kotlinx.serialization.Serializable
 
