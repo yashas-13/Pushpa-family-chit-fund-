@@ -1,4 +1,4 @@
-package in.pravidh.pushpachit.notifications
+package com.pravidh.pushpachit.notifications
 
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessaging
