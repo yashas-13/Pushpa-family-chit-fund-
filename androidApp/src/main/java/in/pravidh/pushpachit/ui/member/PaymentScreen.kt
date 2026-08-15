@@ -1,4 +1,4 @@
-package in.pravidh.pushpachit.ui.member
+package com.pravidh.pushpachit.ui.member
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
