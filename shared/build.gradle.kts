@@ -14,10 +14,8 @@ kotlin {
         }
     }
 
-    iosArm64()
-    iosSimulatorArm64()
-
-    listOf(iosArm64(), iosSimulatorArm64()).forEach { target ->
+    val iosTargets = listOf(iosArm64(), iosSimulatorArm64())
+    iosTargets.forEach { target ->
         target.binaries.framework {
             baseName = "SharedKit"
             isStatic = true
