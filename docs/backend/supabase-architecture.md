@@ -90,7 +90,7 @@ Private buckets:
 - `payment-proofs/{chit_id}/{installment_id}/{member_user_id}/{filename}`
 - `receipts/{chit_id}/{member_user_id}/{receipt_id}.pdf`
 
-Storage policies are defined in `supabase/storage-policies.sql`.
+Bucket configuration is in `supabase/config.toml` for local development. Storage RLS policies are applied by `supabase/migrations/20260815000400_storage_policies.sql`.
 
 ## RLS policy strategy
 
@@ -102,8 +102,8 @@ Do not add privileged helper functions to the exposed API schemas.
 
 1. Create a Supabase project.
 2. Link the project with the Supabase CLI.
-3. Apply migrations with `supabase db push`.
-4. Apply `supabase/storage-policies.sql`.
+3. Apply database migrations with `supabase db push`.
+4. Configure the two private Storage buckets using the Storage API/Dashboard or the project's configuration workflow.
 5. Create the Agent account through Supabase Auth.
 6. Create the Agent profile with role `agent` using a trusted provisioning path.
 7. Create member Auth accounts and profiles.
