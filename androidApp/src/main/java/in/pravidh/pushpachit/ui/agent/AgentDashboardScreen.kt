@@ -50,5 +50,16 @@ fun AgentDashboardScreen(
     }
 }
 
-private fun Long.formatIndian(): String =
-    toString().reversed().chunked(3).joinToString(",").reversed()
+private fun Long.formatIndian(): String {
+    val digits = toString()
+    if (digits.length <= 3) return digits
+    val lastThree = digits.takeLast(3)
+    var prefix = digits.dropLast(3)
+    val groups = mutableListOf<String>()
+    while (prefix.length > 2) {
+        groups += prefix.takeLast(2)
+        prefix = prefix.dropLast(2)
+    }
+    if (prefix.isNotEmpty()) groups += prefix
+    return (groups.asReversed() + lastThree).joinToString(",")
+}
