@@ -1,61 +1,60 @@
 # Pushpa Family Chit Fund
 
-Serverless cross-platform family chit management app.
+Native cross-platform family chit management app with a fully serverless Supabase backend.
 
-## Current scope
+## Product
 
 - 1 Agent + 20 Members
 - 21-month chit
 - ₹15,000 monthly contribution per member
-- Monthly Lucky Dip winner selection
+- Agent contributes ₹0 and manages/guarantees the chit according to the agreement
+- Month 2 is fixed for the Agent
+- Other months support server-authoritative Random Lucky Dip or Agent Manual winner selection
 - Direct member → winner payment tracking
-- Payment proof and Agent verification
-- Digital receipts
-- Member data isolation
-- Audit trail
+- Winner confirms actual payment receipt
+- Agent oversight, guarantee ledger, receipts, audit trail
+- Family group chat with optional payment-screenshot sharing
+- Push and in-app payment reminders
 
-## Backend foundation
+## Native mobile architecture
 
-Supabase is the backend platform:
+- Android: Jetpack Compose
+- iOS: SwiftUI
+- Shared business/data layer: Kotlin Multiplatform
+- Backend: Supabase PostgreSQL, Auth, RLS, Storage, Realtime, database functions and Edge Functions where external secrets/integrations are required
 
-- PostgreSQL
-- Supabase Auth
-- Row Level Security (RLS)
-- Private Storage
-- Realtime
-- PostgreSQL database functions
-- Edge Functions only where external integrations/secrets require them
-
-### Repository structure
+## Financial model
 
 ```text
-supabase/
-├── migrations/
-│   ├── 20260815000100_initial_schema.sql
-│   └── 20260815000200_payment_resubmission.sql
-├── storage-policies.sql
-└── seed.sql
-
-docs/
-├── backend/
-│   └── supabase-architecture.md
-└── superpowers/
-    ├── plans/
-    └── specs/
+20 members × ₹15,000 = ₹3,00,000 monthly collection
+21 months × ₹15,000 = ₹3,15,000 total contribution per member
+Agent monthly contribution = ₹0
+Month 2 winner = Agent
 ```
 
-## Security model
+The supplied 21-month payout schedule is stored as configurable financial data. Member gain/loss and Agent surplus/guarantee exposure are calculated separately so the Agent is never treated as a contributing member.
 
-Every application table has RLS enabled. Members can access only their own private records plus the limited information needed to pay the current monthly winner. The Agent can manage the chit they own.
+## Security
 
-Lucky Dip winner selection is server-authoritative and uses cryptographic randomness in PostgreSQL. The client never submits a winner ID.
+- RLS on application tables
+- Member private-data isolation
+- Private payment proofs and receipts
+- Server-authoritative Lucky Dip
+- Finalized draws and verified payments are audited
+- No service-role/secret Supabase key in mobile binaries
+- Money is paid outside the app; the app is a ledger/verification/communication system, not a money custodian
 
-Payment verification, receipt creation, draw finalization, and audit events are handled as transactional backend operations.
+## Repository
 
-**Never place a Supabase service-role/secret key in the mobile app.** Use the publishable key with RLS for client access.
+```text
+androidApp/   Native Android UI
+iosApp/       Native SwiftUI UI + XcodeGen spec
+shared/       KMP domain + Supabase data layer
+supabase/     Serverless PostgreSQL/RLS/Storage foundation
+docs/         Product/backend architecture and implementation plans
+.github/      Android, iOS, shared and Supabase CI
+```
 
 ## Development
 
-The Supabase migrations are the source of truth for the database schema. Apply them to a disposable development project first, then verify RLS and transaction behavior with separate Agent and Member identities before production deployment.
-
-The Flutter client scaffolding and production Supabase project configuration are the next implementation phase.
+Android CI uses JDK 21 and Gradle 9.5.0. iOS CI generates the Xcode project with XcodeGen and uses Kotlin's `embedAndSignAppleFrameworkForXcode` direct-integration flow. Configure Supabase publishable URL/key through environment/platform configuration; never commit privileged credentials.
