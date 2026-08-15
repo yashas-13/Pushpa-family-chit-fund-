@@ -28,7 +28,7 @@ jobs:
           gradle-version: '9.5.0'
 
       - name: Test shared domain
-        run: gradle :shared:testDebugUnitTest --stacktrace
+        run: gradle :shared:jvmTest --stacktrace
 
       - name: Build debug APK
         run: gradle :androidApp:assembleDebug --stacktrace
