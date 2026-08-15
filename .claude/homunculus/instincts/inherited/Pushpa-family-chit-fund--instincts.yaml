@@ -1,0 +1,155 @@
+# Instincts generated from https://github.com/yashas-13/Pushpa-family-chit-fund-
+# Generated: 2026-08-15T04:34:31.428Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: Pushpa-family-chit-fund--commit-conventional
+trigger: "when writing a commit message"
+confidence: 0.85
+domain: git
+source: repo-analysis
+source_repo: https://github.com/yashas-13/Pushpa-family-chit-fund-
+---
+
+# Pushpa Family Chit Fund  Commit Conventional
+
+## Action
+
+Use conventional commit format with prefixes: docs, feat, fix, test, chore
+
+## Evidence
+
+- 13 commits analyzed
+- Detected conventional commit pattern
+- Examples: docs: add Supabase foundation implementation plan, feat: add supabase chit schema
+
+---
+id: Pushpa-family-chit-fund--commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/yashas-13/Pushpa-family-chit-fund-
+---
+
+# Pushpa Family Chit Fund  Commit Length
+
+## Action
+
+Keep commit messages concise (~39 characters)
+
+## Evidence
+
+- Average commit message length: 39 chars
+- Based on 13 commits
+
+---
+id: Pushpa-family-chit-fund--naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/yashas-13/Pushpa-family-chit-fund-
+---
+
+# Pushpa Family Chit Fund  Naming Files
+
+## Action
+
+Use snake_case naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: snake_case
+
+---
+id: Pushpa-family-chit-fund--import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/yashas-13/Pushpa-family-chit-fund-
+---
+
+# Pushpa Family Chit Fund  Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: Pushpa-family-chit-fund--export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/yashas-13/Pushpa-family-chit-fund-
+---
+
+# Pushpa Family Chit Fund  Export Style
+
+## Action
+
+Prefer named exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: named
+
+---
+id: Pushpa-family-chit-fund--workflow-database-migration
+trigger: "when modifying the database schema or adding tables"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/yashas-13/Pushpa-family-chit-fund-
+---
+
+# Pushpa Family Chit Fund  Workflow Database Migration
+
+## Action
+
+Follow the database-migration workflow:
+1. Create migration file
+2. Update schema definitions
+3. Generate/update types
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~21x per month
+- Files: migrations/*, **/schema.*
+
+---
+id: Pushpa-family-chit-fund--workflow-feature-development
+trigger: "when implementing a new feature"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/yashas-13/Pushpa-family-chit-fund-
+---
+
+# Pushpa Family Chit Fund  Workflow Feature Development
+
+## Action
+
+Follow the feature-development workflow:
+1. Add feature implementation
+2. Add tests for feature
+3. Update documentation
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~18x per month
+- Files: **/*.test.*
+
