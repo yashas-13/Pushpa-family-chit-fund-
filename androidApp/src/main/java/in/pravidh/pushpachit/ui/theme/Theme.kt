@@ -1,4 +1,4 @@
-package in.pravidh.pushpachit.ui.theme
+package com.pravidh.pushpachit.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
