@@ -1,0 +1,51 @@
+name: Mobile CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, 'feat/**']
+
+jobs:
+  flutter-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Generate native platform folders
+        run: flutter create . --platforms=android,ios --org com.pravidhisolutions
+      - name: Get dependencies
+        run: flutter pub get
+      - name: Analyze
+        run: flutter analyze
+      - name: Test
+        run: flutter test
+      - name: Build Android APK
+        run: flutter build apk --debug
+
+  flutter-ios:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Generate native platform folders
+        run: flutter create . --platforms=ios --org com.pravidhisolutions
+      - name: Get dependencies
+        run: flutter pub get
+      - name: Analyze
+        run: flutter analyze
+      - name: Test
+        run: flutter test
+      - name: Build iOS without signing
+        run: flutter build ios --debug --no-codesign
