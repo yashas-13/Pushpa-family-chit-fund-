@@ -31,6 +31,6 @@ targets:
             exit 0
           fi
           cd "$SRCROOT/.."
-          ./gradlew :shared:embedAndSignAppleFrameworkForXcode
+          gradle :shared:embedAndSignAppleFrameworkForXcode < /dev/null
     scheme:
       testTargets: []
