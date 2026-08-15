@@ -1,4 +1,4 @@
-package in.pravidh.pushpachit.ui.agent
+package com.pravidh.pushpachit.ui.agent
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,8 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import in.pravidh.pushpachit.shared.domain.ChitRules
-import in.pravidh.pushpachit.shared.domain.WinnerSelectionMode
+import com.pravidh.pushpachit.shared.domain.ChitRules
+import com.pravidh.pushpachit.shared.domain.WinnerSelectionMode
 
 @Composable
 fun WinnerSelectionScreen() {
