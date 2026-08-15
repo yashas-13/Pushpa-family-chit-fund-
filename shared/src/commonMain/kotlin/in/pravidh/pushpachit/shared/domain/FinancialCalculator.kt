@@ -1,4 +1,4 @@
-package in.pravidh.pushpachit.shared.domain
+package com.pravidh.pushpachit.shared.domain
 
 object FinancialCalculator {
     fun memberNet(payout: Long, totalContribution: Long = TOTAL_MEMBER_CONTRIBUTION): Long =
