@@ -1,7 +1,6 @@
-package in.pravidh.pushpachit.shared.data
+package com.pravidh.pushpachit.shared.data
 
-import in.pravidh.pushpachit.shared.domain.MemberPayment
-import in.pravidh.pushpachit.shared.domain.PaymentState
+import com.pravidh.pushpachit.shared.domain.MemberPayment
 
 interface PaymentRepository {
     suspend fun myObligations(): Result<List<MemberPayment>>
