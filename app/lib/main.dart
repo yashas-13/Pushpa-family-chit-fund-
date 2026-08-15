@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'core/supabase_config.dart';
-import 'ui/app_shell.dart';
+import 'ui/auth_gate.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +21,7 @@ class PushpaFamilyChitApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF5B3CC4)),
         useMaterial3: true,
       ),
-      home: const AppShell(),
+      home: const AuthGate(),
     );
   }
 }
