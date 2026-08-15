@@ -1,8 +1,8 @@
-package in.pravidh.pushpachit.shared.data
+package com.pravidh.pushpachit.shared.data
 
-import in.pravidh.pushpachit.shared.domain.ChitSummary
-import in.pravidh.pushpachit.shared.domain.FinancialCalculator
-import in.pravidh.pushpachit.shared.domain.MonthlySchedule
+import com.pravidh.pushpachit.shared.domain.ChitSummary
+import com.pravidh.pushpachit.shared.domain.FinancialCalculator
+import com.pravidh.pushpachit.shared.domain.MonthlySchedule
 
 interface ChitRepository {
     suspend fun currentChit(): Result<ChitSummary>
