@@ -6,7 +6,7 @@ plugins {
 
 kotlin {
     android {
-        namespace = "in.pravidh.pushpachit.shared"
+        namespace = "com.pravidh.pushpachit.shared"
         compileSdk = 37
         minSdk = 26
         withHostTestBuilder {}
