@@ -1,4 +1,4 @@
-package in.pravidh.pushpachit.ui
+package com.pravidh.pushpachit.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,10 +18,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import in.pravidh.pushpachit.shared.domain.UserRole
-import in.pravidh.pushpachit.ui.agent.AgentDashboardScreen
-import in.pravidh.pushpachit.ui.member.MemberDashboardScreen
-import in.pravidh.pushpachit.ui.theme.PushpaTheme
+import com.pravidh.pushpachit.shared.domain.UserRole
+import com.pravidh.pushpachit.ui.agent.AgentDashboardScreen
+import com.pravidh.pushpachit.ui.member.MemberDashboardScreen
+import com.pravidh.pushpachit.ui.theme.PushpaTheme
 
 @Composable
 fun AppRoot() {
@@ -62,7 +62,7 @@ fun AppRoot() {
 private fun WinnerSelectionHost(onBack: () -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Button(onClick = onBack) { Text("Back") }
-        in.pravidh.pushpachit.ui.agent.WinnerSelectionScreen()
+        com.pravidh.pushpachit.ui.agent.WinnerSelectionScreen()
     }
 }
 
@@ -70,6 +70,6 @@ private fun WinnerSelectionHost(onBack: () -> Unit) {
 private fun ChatHost(onBack: () -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Button(onClick = onBack) { Text("Back") }
-        in.pravidh.pushpachit.ui.member.ChatScreen()
+        com.pravidh.pushpachit.ui.member.ChatScreen()
     }
 }
