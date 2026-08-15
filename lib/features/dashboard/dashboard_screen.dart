@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../data/models/chit_models.dart';
 import '../../data/repositories/chit_repository.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -10,7 +11,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  late Future<List<dynamic>> _future;
+  late Future<List<Chit>> _future;
 
   @override
   void initState() {
@@ -22,12 +23,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Chit Dashboard')),
-      body: FutureBuilder<List<dynamic>>(
+      body: FutureBuilder<List<Chit>>(
         future: _future,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) return const Center(child: CircularProgressIndicator());
           if (snapshot.hasError) return Center(child: Text('Supabase error: ${snapshot.error}'));
-          final chits = snapshot.data ?? const [];
+          final chits = snapshot.data ?? const <Chit>[];
           if (chits.isEmpty) return const Center(child: Text('No chit configured yet.'));
           return ListView.builder(
             padding: const EdgeInsets.all(16),
