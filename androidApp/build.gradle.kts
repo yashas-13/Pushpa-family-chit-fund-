@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "in.pravidh.pushpachit"
+    namespace = "com.pravidh.pushpachit"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "in.pravidh.pushpachit"
+        applicationId = "com.pravidh.pushpachit"
         minSdk = 26
         targetSdk = 37
         versionCode = 1
