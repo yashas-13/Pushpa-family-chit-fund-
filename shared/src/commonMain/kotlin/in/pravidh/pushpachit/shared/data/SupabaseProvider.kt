@@ -1,4 +1,4 @@
-package in.pravidh.pushpachit.shared.data
+package com.pravidh.pushpachit.shared.data
 
 import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.createSupabaseClient
