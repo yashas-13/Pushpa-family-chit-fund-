@@ -1,11 +1,5 @@
--- Private storage buckets for payment evidence and generated receipts.
--- Run after the core schema migration.
-
-insert into storage.buckets (id, name, public)
-values
-  ('payment-proofs', 'payment-proofs', false),
-  ('receipts', 'receipts', false)
-on conflict (id) do update set public = excluded.public;
+-- Storage buckets are declared in supabase/config.toml.
+-- This file contains only storage.objects access policies.
 
 -- Payment proof path:
 -- payment-proofs/{chit_id}/{installment_id}/{member_user_id}/{filename}
