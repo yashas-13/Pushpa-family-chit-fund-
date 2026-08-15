@@ -25,4 +25,4 @@ jobs:
           gradle-version: '9.5.0'
 
       - name: Run shared tests
-        run: gradle :shared:testDebugUnitTest --stacktrace
+        run: gradle :shared:jvmTest --stacktrace
