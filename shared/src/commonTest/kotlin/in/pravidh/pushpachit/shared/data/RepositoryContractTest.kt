@@ -1,4 +1,4 @@
-package in.pravidh.pushpachit.shared.data
+package com.pravidh.pushpachit.shared.data
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
