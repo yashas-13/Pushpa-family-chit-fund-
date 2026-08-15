@@ -2,66 +2,122 @@
 
 ## 1. Goal
 
-Build a cross-platform mobile app for one private family chit with 1 Agent/Admin and 20 Members across 21 months. The app manages the chit ledger, Lucky Dip winner selection, direct member-to-winner payment obligations, payment proof, agent verification, receipts, notifications, and audit history.
+Build a native-feeling cross-platform mobile app for one private family chit with 1 Agent/Admin and 20 Members across 21 months. Android uses Jetpack Compose, iOS uses SwiftUI, and Kotlin Multiplatform shares domain, data, validation, and financial logic. Supabase is the serverless backend.
 
 ## 2. Roles
 
 ### Agent/Admin
 - Manage the chit and 20 members.
-- Configure contribution, schedule, prize/chit amounts, eligibility rules, and payment details.
-- Start and finalize monthly Lucky Dip draws.
-- View all payment obligations and submitted proofs.
-- Verify/reject payments and record correction events through an audit trail.
-- View winners, receipts, reports, and audit logs.
+- Does not contribute ₹15,000 monthly.
+- Acts as organizer/manager and cash/payment guarantor according to the chit agreement.
+- Month 2 is permanently fixed for the Agent; no random/manual member selection is allowed for Month 2.
+- For other months, choose server-authoritative Random Lucky Dip or Agent manual member selection.
+- View all payment obligations, winner collections, submitted proofs, guarantee exposure, receipts, reports, notifications, chat, and audit logs.
 
 ### Member
 - Authenticate into an individual account.
-- View only their own payment/status/history.
+- Contribute ₹15,000 per month.
+- View only their own private payment/status/history.
 - View the current month's winner and payment destination details required to pay them.
-- Submit payment method, transaction/reference information, and optional proof.
-- View verification status and receipts.
+- Submit payment details/proof and optionally share a proof image into the family group.
+- View verification status, receipts, and their personal gain/loss position.
 
-## 3. Chit Rules
+### Winner
+- A member who wins a month receives a collection dashboard for that month.
+- The winner confirms actual receipt of each member payment.
+- A payment screenshot is evidence of a payment claim, not proof of receipt; winner confirmation is required before the payment is considered received.
+- The Agent retains administrative oversight and dispute/guarantee controls.
 
-- 20 members.
+## 3. Chit Rules and Financial Model
+
+- 20 contributing members.
 - 21 monthly installments.
 - Default member contribution: ₹15,000 per month.
-- Monthly pool based on 20 contributors is ₹3,00,000; prize/chit amounts from the supplied sheet remain configurable rather than hard-coded.
-- Monthly winner is selected using a server-authoritative cryptographically secure Lucky Dip.
-- Participant list is locked before a draw.
-- A finalized draw cannot be silently rerun or edited.
-- Winner eligibility is configurable; default is one win per member for months 1–20, with an explicit configurable rule for month 21.
+- Monthly member collection: ₹3,00,000.
+- Agent contribution: ₹0.
+- Month 2 winner: Agent, fixed by business rule.
+- Supplied payout schedule:
+  - Month 1: ₹2,64,000
+  - Month 2: Agent
+  - Month 3: ₹2,66,000
+  - Month 4: ₹2,68,000
+  - Month 5: ₹2,70,000
+  - Month 6: ₹2,72,000
+  - Month 7: ₹2,75,000
+  - Month 8: ₹2,78,000
+  - Month 9: ₹2,82,000
+  - Month 10: ₹2,86,000
+  - Month 11: ₹2,90,000
+  - Month 12: ₹2,95,000
+  - Month 13: ₹3,00,000
+  - Month 14: ₹3,06,000
+  - Month 15: ₹3,12,000
+  - Month 16: ₹3,19,000
+  - Month 17: ₹3,26,000
+  - Month 18: ₹3,34,000
+  - Month 19: ₹3,42,000
+  - Month 20: ₹3,51,000
+  - Month 21: ₹3,61,000
+- Schedule values are stored as configurable rupee amounts in the database; the application must not hard-code the schedule into UI logic.
+- A member who wins a scheduled member month pays ₹15,000 for all 21 months, so their simple contribution-vs-payout result is `payout - ₹3,15,000`.
+- Monthly pool margin is `₹3,00,000 - scheduled payout`; negative values are Agent guarantee exposure if the agreement requires the Agent to cover the shortfall.
+- Agent's Month-2 personal receipt is distinct from chit-pool margin reporting because the Agent is not a contributing member.
+- All financial reports must distinguish gross collection, winner payout, member gain/loss, Agent guarantee amount, Agent expenses, and net Agent position. The app must not automatically label every difference as profit.
 
-## 4. Payment Flow
+## 4. Winner Selection
+
+- Month 2 is `FIXED_AGENT` and cannot be overridden through normal UI operations.
+- Other months support `RANDOM` or `MANUAL`.
+- Random selection is server-authoritative and cryptographically secure.
+- Participant list is locked before a draw.
+- Manual selection is server-validated against eligibility.
+- Every draw records method, eligible participant snapshot, selected winner, actor, timestamp, and immutable audit identifier.
+- A finalized draw cannot be silently rerun or edited.
+
+## 5. Payment and Guarantee Flow
 
 1. Agent starts the monthly cycle.
-2. Eligible participant list is calculated and locked.
-3. Secure Lucky Dip selects one winner.
+2. Eligible participant list and scheduled payout are calculated.
+3. Winner is fixed/drawn/selected according to the month rule.
 4. Winner/payment destination details are shown to members who need to pay.
 5. Each member pays the winner outside the app.
-6. Member submits payment details/proof.
-7. Agent verifies or rejects the submission.
-8. Verified payment produces a receipt and immutable ledger event.
-9. Month is completed when the configured collection condition is satisfied.
+6. Member submits payment amount, method, transaction/reference information, and optional private proof.
+7. Winner reviews the payment claim and confirms actual receipt.
+8. Agent has administrative oversight and can resolve disputes according to authorization rules.
+9. Verified payment produces a receipt and immutable ledger event.
+10. If a required winner payout is not fully covered by member collections and the agreement requires a guarantee, the Agent guarantee ledger records the shortfall separately.
+11. Monthly cycle closes when the configured collection condition is satisfied.
 
-The app is not a money custodian and does not represent the Agent as receiving/distributing member funds.
+The app is not a money custodian and does not hold or transfer member funds.
 
-## 5. Screens
+## 6. Communication and Notifications
+
+- One authenticated family group is available to Agent and all 20 members.
+- Chat supports text, images/payment screenshots, winner announcements, and system messages.
+- Payment proof is private by default and can be explicitly shared to the family group.
+- Push and in-app reminders cover payment due, payment overdue, winner announcement, payment proof submitted, payment received/verified, winner collection pending, Agent guarantee used, monthly start, and chat messages.
+- Notification preferences are persisted per user.
+
+## 7. Screens
 
 ### Agent
 - Login
 - Dashboard
-- Lucky Dip
+- Winner Selection
 - Draw Result
 - Monthly Payment Status
+- Winner Collection
 - Payment Verification
 - Members List
 - Member Details
 - Chit Schedule
 - Winners
-- Reports
+- Financial Reports
+- Member Gain/Loss
+- Agent Guarantee Ledger
 - Receipts
 - Notifications
+- Family Chat
 - Settings
 - Audit Log
 
@@ -72,11 +128,21 @@ The app is not a money custodian and does not represent the Agent as receiving/d
 - Submit Payment Proof
 - Payment History
 - Chit/Winner Status
+- My Gain/Loss
 - Receipts
 - Notifications
+- Family Chat
 - Profile
 
-## 6. Security and Integrity
+### Winner
+- Winner Collection Dashboard
+- Member-by-member payment status
+- Proof review
+- Confirm receipt
+- Pending payment reminders
+- Final collection confirmation
+
+## 8. Security and Integrity
 
 - Backend-enforced role-based access control.
 - Members cannot query another member's private payment data even by manipulating API requests.
@@ -86,33 +152,60 @@ The app is not a money custodian and does not represent the Agent as receiving/d
 - Immutable/finalized draw records with participant snapshot, winner, timestamp, and draw identifier.
 - Financial corrections represented as audited adjustment events rather than silent mutation of verified history.
 - Payment proofs stored separately from transactional records with access control.
+- No service-role key or privileged backend credential in mobile binaries.
 
-## 7. Data Model
+## 9. Data Model
 
-Core entities: users, members, chits, chit_members, installments, draws, draw_participants, winners, payment_obligations, payment_submissions, payment_verifications, receipts, notifications, and audit_logs.
+Core entities: users/profiles, members, chits, chit_members, installments, draws, draw_participants, winners, payment_obligations, payment_submissions, payment_verifications, winner_receipts, agent_guarantees, receipts, notifications, notification_preferences, chat_rooms, chat_messages, chat_attachments, and audit_logs.
 
-## 8. Architecture
+## 10. Architecture
 
-Recommended client: Flutter for Android and iOS from one codebase.
+### Android
+- Separate native Android application module.
+- Jetpack Compose Material 3 UI.
 
-Recommended backend: typed REST API with PostgreSQL for transactional data and object storage for payment proofs/receipts. The backend owns authorization, chit state transitions, Lucky Dip randomness, payment state transitions, and audit logging.
+### iOS
+- Native SwiftUI application.
+- Shared KMP framework consumed by Swift.
 
-## 9. State Model
+### Shared KMP
+- Kotlin Multiplatform domain models.
+- Financial calculations and validation.
+- Supabase repository/data layer.
+- Auth/session state.
+- Payment/draw state models.
 
-Payment submission states: PENDING_VERIFICATION → VERIFIED or REJECTED.
+### Backend
+- Supabase PostgreSQL for transactional data.
+- Supabase Auth for authentication.
+- RLS for authorization/data isolation.
+- Storage for private payment proofs and receipts.
+- Realtime for chat and status updates.
+- Edge Functions/database functions for privileged state transitions, Lucky Dip, winner finalization, payment verification, notifications, and receipts.
 
-Draw states: DRAFT → PARTICIPANTS_LOCKED → FINAL.
+## 11. State Model
 
-A FINAL draw cannot be changed through normal application operations.
+Payment submission states: `DUE → CLAIMED → RECEIPT_PENDING → VERIFIED` or `REJECTED → CLAIMED`.
 
-## 10. MVP Acceptance Criteria
+Draw states: `DRAFT → PARTICIPANTS_LOCKED → FINAL`.
 
-- Agent can create/manage exactly one initial chit with 20 members and 21 months.
-- Agent can run a secure Lucky Dip and obtain exactly one winner.
+Winner selection modes: `RANDOM`, `MANUAL`, `FIXED_AGENT`.
+
+A `FINAL` draw cannot be changed through normal application operations.
+
+## 12. MVP Acceptance Criteria
+
+- Agent can manage exactly one initial chit with 20 contributing members and 21 months.
+- Agent does not have a monthly ₹15,000 member obligation.
+- Month 2 is always the Agent winner and cannot be selected through Lucky Dip/manual member selection.
+- Agent can choose Random Lucky Dip or Manual selection for other months.
 - Members see the current winner and their own ₹15,000 obligation.
 - Members can submit external-payment proof.
-- Agent can verify/reject submissions.
+- Winner can confirm actual receipt of each payment.
+- Agent can oversee payment verification and disputes.
 - Verified payments generate receipts.
+- Members can use the family group chat and optionally share payment screenshots.
+- Payment reminders and push/in-app notification categories work through server-driven events.
 - Member access is isolated from other members' private data.
-- Draws and financial corrections have auditable history.
-- Android and iOS share the same application codebase.
+- Draws, payment corrections, guarantee usage, and financial adjustments have auditable history.
+- Android and iOS use native UI with shared KMP business/data logic.

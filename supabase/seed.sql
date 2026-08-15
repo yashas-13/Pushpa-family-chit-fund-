@@ -1,0 +1,13 @@
+-- Seed data intentionally avoids creating auth.users records.
+-- Create test users through Supabase Auth (or the local Auth API), then insert
+-- their profiles/chit membership through the trusted development bootstrap path.
+--
+-- Initial production values:
+--   chit name: Pushpa Family Chit
+--   members: 20
+--   months: 21
+--   monthly contribution: 15000.00
+--   allow_repeat_winners: false
+--
+-- The application bootstrap phase will create the Agent, 20 members and
+-- 21 installments from these values after Auth identities exist.

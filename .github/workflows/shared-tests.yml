@@ -1,0 +1,28 @@
+name: Shared Domain Tests
+
+on:
+  pull_request:
+  push:
+    branches: [main, 'feat/**']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.5.0'
+
+      - name: Run shared tests
+        run: gradle :shared:testDebugUnitTest --stacktrace
