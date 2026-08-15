@@ -24,5 +24,23 @@ jobs:
         with:
           gradle-version: '9.5.0'
 
-      - name: Run shared tests
-        run: gradle :shared:jvmTest --stacktrace
+      - name: Run shared tests with diagnostic log
+        id: tests
+        shell: bash
+        run: |
+          set +e
+          gradle :shared:jvmTest --stacktrace --console=plain 2>&1 | tee shared-test.log
+          status=${PIPESTATUS[0]}
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Upload shared test log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shared-test-log
+          path: shared-test.log
+
+      - name: Fail if shared tests failed
+        if: steps.tests.outputs.status != '0'
+        run: exit 1
