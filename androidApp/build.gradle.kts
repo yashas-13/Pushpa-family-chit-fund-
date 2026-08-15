@@ -33,6 +33,10 @@ dependencies {
     implementation(composeBom)
     androidTestImplementation(composeBom)
 
+    val firebaseBom = platform(libs.firebase.bom)
+    implementation(firebaseBom)
+    implementation(libs.firebase.messaging)
+
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.tooling.preview)
